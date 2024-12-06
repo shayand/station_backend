@@ -52,3 +52,9 @@ spring:
   docker:
     compose:
       file: docker-compose.yml
+
+springdoc:
+  swagger-ui:
+    path: /api-docs/swagger-ui
+  api-docs:
+    path: /api-docs/manual
