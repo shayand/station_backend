@@ -1,0 +1,65 @@
+services:
+  postgres:
+    image: 'postgres'
+    environment:
+      - 'POSTGRES_DB=${POSTGRES_DATABASE:-station_db}'
+      - 'POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-very_secret}'
+      - 'POSTGRES_USER=${POSTGRES_USER:-station_user}'
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - docker-net
+    ports:
+      - '5432'
+  redis:
+    image: redis:${REDIS_VERSION:-6.2}-alpine
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD:-very_secret}
+    volumes:
+      - redis-data:/data
+    networks:
+      - docker-net
+    ports:
+      - "${REDIS_PORT:-6379}"
+  minio:
+    image: docker.io/bitnami/minio:2022
+    ports:
+      - '9000'
+      - '9001'
+    networks:
+      - docker-net
+    volumes:
+      - minio-data:/data
+    environment:
+      - MINIO_ROOT_USER=${MINIO_USER:-station_user}
+      - MINIO_ROOT_PASSWORD=${MINIO_PASSWORD:-very_secret}
+      - MINIO_DEFAULT_BUCKETS=${MINIO_BUCKET:-station}
+
+#  station-backend:
+#    build: .
+#    depends_on:
+#      - postgres
+#      - redis
+#      - minio
+#    ports:
+#      - "${TOMCAT_PORT:-8080}:${TOMCAT_PORT:-8080}"
+#    networks:
+#      - docker-net
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=prod
+#      #- SPRING_CONFIG_ADDITIONAL_LOCATION=file:./application.yml
+#    volumes:
+#      - ./.env:/app/.env
+
+volumes:
+  postgres-data:
+    driver: local
+  redis-data:
+    driver: local
+  minio-data:
+    driver: local
+
+networks:
+  docker-net:
+    external: true
