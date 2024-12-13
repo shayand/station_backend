@@ -20,7 +20,8 @@
   </licenses>
   <developers>
     <developer>
-      <name></name>
+      <name>Shayan Davarzani</name>
+      <email>shayan@sepidan.net</email>
     </developer>
   </developers>
   <scm>
@@ -35,6 +36,9 @@
     <org.mapstruct.version>1.6.3</org.mapstruct.version>
     <springdoc.version>2.7.0</springdoc.version>
     <org.redisson.version>3.40.0</org.redisson.version>
+    <spring-boot.validation.version>3.40</spring-boot.validation.version>
+    <slf4j-api.version>1.7.25</slf4j-api.version>
+    <org.mapstruct-binding.version>0.2.0</org.mapstruct-binding.version>
   </properties>
   <dependencies>
     <dependency>
@@ -86,11 +90,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.springframework.restdocs</groupId>
-      <artifactId>spring-restdocs-mockmvc</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
       <version>${org.mapstruct.version}</version>
@@ -99,6 +98,11 @@
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
       <version>${springdoc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <scope>runtime</scope>
     </dependency>
   </dependencies>
   <dependencyManagement>
@@ -109,6 +113,27 @@
         <version>${spring-cloud.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-validation</artifactId>
+        <version>${spring-boot.validation.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-log4j2</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-validation</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>jakarta.validation</groupId>
+        <artifactId>jakarta.validation-api</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -128,6 +153,11 @@
               <groupId>org.mapstruct</groupId>
               <artifactId>mapstruct-processor</artifactId>
               <version>${org.mapstruct.version}</version>
+            </path>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok-mapstruct-binding</artifactId>
+              <version>${org.mapstruct-binding.version}</version>
             </path>
           </annotationProcessorPaths>
         </configuration>
@@ -149,13 +179,6 @@
             </configuration>
           </execution>
         </executions>
-        <dependencies>
-          <dependency>
-            <groupId>org.springframework.restdocs</groupId>
-            <artifactId>spring-restdocs-asciidoctor</artifactId>
-            <version>${spring-restdocs.version}</version>
-          </dependency>
-        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
