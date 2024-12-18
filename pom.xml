@@ -39,6 +39,7 @@
     <spring-boot.validation.version>3.40</spring-boot.validation.version>
     <slf4j-api.version>1.7.25</slf4j-api.version>
     <org.mapstruct-binding.version>0.2.0</org.mapstruct-binding.version>
+    <lombok.version>1.18.36</lombok.version>
   </properties>
   <dependencies>
     <dependency>
@@ -83,6 +84,7 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <optional>true</optional>
+      <version>${lombok.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
