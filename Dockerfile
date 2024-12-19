@@ -8,7 +8,7 @@ WORKDIR /app
 COPY target/*.jar app.jar
 
 # Copy the application.yml file
-COPY src/main/resources/application.yml /app/application.yml
+COPY src/main/resources/application-prod.yml /app/application.yml.template
 
 # Install dependencies to handle .env file
 RUN apt-get update && apt-get install -y \
@@ -18,11 +18,10 @@ RUN apt-get update && apt-get install -y \
 # Copy .env file to the container
 COPY .env /app/.env
 
-# Substitute environment variables into application.yml
-RUN envsubst < /app/application.yml > /app/application.yml.temp && mv /app/application.yml.temp /app/application.yml
+RUN export $(cat /app/.env | xargs) && envsubst < /app/application.yml.template > /app/application.yml
 
 # Expose the port that the application runs on
-EXPOSE 8080
+EXPOSE ${TOMCAT_PORT:-9096}
 
 # Command to run the application
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]

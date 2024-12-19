@@ -61,7 +61,7 @@ services:
     ports:
       - "${KEYCLOAK_PORT:-9097}:8080"
 
-  station-backend:
+  station_backend:
     build: .
     depends_on:
       - postgres
@@ -72,9 +72,6 @@ services:
       - "${TOMCAT_PORT:-8080}:${TOMCAT_PORT:-8080}"
     networks:
       - docker-net
-    environment:
-      - SPRING_PROFILES_ACTIVE=dev
-      #- SPRING_CONFIG_ADDITIONAL_LOCATION=file:./application.yml
     volumes:
       - ./.env:/app/.env
 
