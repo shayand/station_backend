@@ -40,9 +40,9 @@ services:
     image: quay.io/keycloak/keycloak:23.0.7
     environment:
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://${KEYCLOAK_DATABASE_HOST:-localhost}:5432/${KEYCLOAK_DATABASE:-station_auth}
+      KC_DB_URL: jdbc:postgresql://postgres:5432/${KEYCLOAK_DATABASE:-station_auth}
       KC_DB_USERNAME: ${POSTGRES_USER:-station_user}
-      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-station_user}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-very_secret}
 
       KC_HOSTNAME: ${KEYCLOAK_HOST:-localhost}
       KC_HOSTNAME_PORT: ${KEYCLOAK_PORT:-9097}
@@ -61,19 +61,19 @@ services:
     ports:
       - "${KEYCLOAK_PORT:-9097}:8080"
 
-  station_backend:
-    build: .
-    depends_on:
-      - postgres
-      - redis
-      - minio
-      - keycloak
-    ports:
-      - "${TOMCAT_PORT:-8080}:${TOMCAT_PORT:-8080}"
-    networks:
-      - docker-net
-    volumes:
-      - ./.env:/app/.env
+#  station_backend:
+#    build: .
+#    depends_on:
+#      - postgres
+#      - redis
+#      - minio
+#      - keycloak
+#    ports:
+#      - "${TOMCAT_PORT:-8080}:${TOMCAT_PORT:-8080}"
+#    networks:
+#      - docker-net
+#    volumes:
+#      - ./.env:/app/.env
 
 volumes:
   postgres-data2:

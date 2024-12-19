@@ -1,3 +1,7 @@
+origins: http://localhost:${TOMCAT_PORT}
+realm: station
+issuer: http://localhost:${KEYCLOAK_PORT}/realms/${realm}
+
 database:
   url: jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DATABASE}
   username: ${POSTGRES_USER}
@@ -24,7 +28,11 @@ spring:
     url: ${database.url}
     username: ${database.username}
     password: ${database.password}
-
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${issuer}
 
   jpa:
     hibernate:
