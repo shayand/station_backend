@@ -7,11 +7,11 @@ services:
       - 'POSTGRES_USER=${POSTGRES_USER:-station_user}'
     restart: unless-stopped
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - postgres-data2:/var/lib/postgresql/data
     networks:
       - docker-net
     ports:
-      - '5432'
+      - '9042:5432'
   redis:
     image: redis:${REDIS_VERSION:-6.2}-alpine
     restart: unless-stopped
@@ -21,7 +21,7 @@ services:
     networks:
       - docker-net
     ports:
-      - "${REDIS_PORT:-6379}"
+      - "${REDIS_PORT:-6379}:6379"
   minio:
     image: docker.io/bitnami/minio:2022
     ports:
@@ -36,24 +36,50 @@ services:
       - MINIO_ROOT_PASSWORD=${MINIO_PASSWORD:-very_secret}
       - MINIO_DEFAULT_BUCKETS=${MINIO_BUCKET:-station}
 
-#  station-backend:
-#    build: .
-#    depends_on:
-#      - postgres
-#      - redis
-#      - minio
-#    ports:
-#      - "${TOMCAT_PORT:-8080}:${TOMCAT_PORT:-8080}"
-#    networks:
-#      - docker-net
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=prod
-#      #- SPRING_CONFIG_ADDITIONAL_LOCATION=file:./application.yml
-#    volumes:
-#      - ./.env:/app/.env
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0.7
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://${KEYCLOAK_DATABASE_HOST:-localhost}:5432/${KEYCLOAK_DATABASE:-station_auth}
+      KC_DB_USERNAME: ${POSTGRES_USER:-station_user}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-station_user}
+
+      KC_HOSTNAME: ${KEYCLOAK_HOST:-localhost}
+      KC_HOSTNAME_PORT: ${KEYCLOAK_PORT:-9097}
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_LOG_LEVEL: info
+      KC_METRICS_ENABLED: true
+      KC_HEALTH_ENABLED: true
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN_USER:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-very_secret}
+    command: start-dev
+    networks:
+      - docker-net
+    depends_on:
+      - postgres
+    ports:
+      - "${KEYCLOAK_PORT:-9097}:8080"
+
+  station-backend:
+    build: .
+    depends_on:
+      - postgres
+      - redis
+      - minio
+      - keycloak
+    ports:
+      - "${TOMCAT_PORT:-8080}:${TOMCAT_PORT:-8080}"
+    networks:
+      - docker-net
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      #- SPRING_CONFIG_ADDITIONAL_LOCATION=file:./application.yml
+    volumes:
+      - ./.env:/app/.env
 
 volumes:
-  postgres-data:
+  postgres-data2:
     driver: local
   redis-data:
     driver: local
