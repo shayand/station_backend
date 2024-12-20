@@ -20,7 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Profile("!test")
 public class SecurityConfig {
 
-  @Value("${issuer}")
+  @Value("${iam.issuer}")
   private String issuer;
 
   @Bean

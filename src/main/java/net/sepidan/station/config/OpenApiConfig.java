@@ -10,9 +10,7 @@ import io.swagger.v3.oas.models.security.OAuthFlows;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.security.SecurityScheme.Type;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 })
 public class OpenApiConfig {
 
-  @Value("${issuer}")
+  @Value("${iam.issuer}")
   private String issuerUrl;
 
   @Bean
@@ -33,7 +31,7 @@ public class OpenApiConfig {
         ).addSecurityItem(new SecurityRequirement().addList("keycloak"))
         .components(new Components().addSecuritySchemes("keycloak",
             new SecurityScheme().type(Type.OAUTH2).scheme("bearer").bearerFormat("JWT")
-                .flows(new OAuthFlows().clientCredentials(
+                .flows(new OAuthFlows().password(
                     new OAuthFlow().authorizationUrl(
                         issuerUrl + "/protocol/openid-connect/auth"
                     ).tokenUrl(

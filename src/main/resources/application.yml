@@ -1,6 +1,11 @@
-origins: http://localhost:${TOMCAT_PORT}
-realm: station
-issuer: http://localhost:${KEYCLOAK_PORT}/realms/${realm}
+iam:
+  url: http://localhost:${KEYCLOAK_PORT}
+  realm: station
+  issuer: ${iam.url}/realms/${iam.realm}
+  client-id: springboot
+  client-secret: f3xjGSZaJFBv49kbwbE0aX9UmD5B2kLI
+  client-manager-username: springboot-admin
+  client-manager-password: very_very_secret
 
 database:
   url: jdbc:postgresql://${POSTGRES_HOST}:5432/${POSTGRES_DATABASE}
@@ -32,7 +37,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${issuer}
+          issuer-uri: ${iam.issuer}
 
   jpa:
     hibernate:

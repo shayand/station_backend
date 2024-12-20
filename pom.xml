@@ -40,6 +40,7 @@
     <slf4j-api.version>1.7.25</slf4j-api.version>
     <org.mapstruct-binding.version>0.2.0</org.mapstruct-binding.version>
     <lombok.version>1.18.36</lombok.version>
+    <keycloak.version>26.0.3</keycloak.version>
   </properties>
   <dependencies>
     <dependency>
@@ -114,6 +115,11 @@
       <!-- used when converting Keycloak roles to Spring authorities -->
       <groupId>com.jayway.jsonpath</groupId>
       <artifactId>json-path</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.keycloak</groupId>
+      <artifactId>keycloak-admin-client</artifactId>
+      <version>${keycloak.version}</version>
     </dependency>
   </dependencies>
   <dependencyManagement>
