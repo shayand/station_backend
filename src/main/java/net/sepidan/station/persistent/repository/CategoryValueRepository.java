@@ -6,6 +6,10 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 
 public interface CategoryValueRepository extends ElasticsearchRepository<CategoryValue, String> {
 
+  List<CategoryValue> findAllByDeletedAtIsNull();
+
+  // Find soft-deleted entries
   List<CategoryValue> findAllByDeletedAtIsNotNull();
+
 
 }
