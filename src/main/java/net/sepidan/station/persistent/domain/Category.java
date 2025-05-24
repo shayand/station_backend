@@ -12,7 +12,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Data
-@Document(indexName = "categories_index")
+@Document(indexName = "category_index")
 public class Category implements Serializable, Auditable {
 
   @Id
@@ -38,17 +38,20 @@ public class Category implements Serializable, Auditable {
 
 
   /*
-  -- auto-generated definition
-  create table categories
+-- auto-generated definition
+create table categories
 (
     id            bigint generated always as identity
         primary key,
     category_name varchar(255) not null,
-    description   text
+    description   text,
+    deleted_at    timestamp,
+    created_at    timestamp,
+    updated_at    timestamp
 );
 
-  alter table categories
-  owner to postgres;
+alter table categories
+    owner to postgres;
    */
 
 }

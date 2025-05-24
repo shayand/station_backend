@@ -6,7 +6,7 @@ import net.sepidan.station.enums.DatabaseType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-@Document(indexName = "attribute_type")
+@Document(indexName = "attribute_type_index")
 @Data
 public class AttributeDataBaseType {
 
@@ -19,6 +19,18 @@ public class AttributeDataBaseType {
 
   // todo: use seed for this
 /*
+
+  -- auto-generated definition
+  create table attribute_type
+  (
+      id            bigint       not null
+          primary key,
+      database_type varchar(255) not null
+  );
+
+  alter table attribute_type
+      owner to postgres;
+
   INSERT INTO attribute_type (id, database_type) VALUES (1, 'TEXT');
   INSERT INTO attribute_type (id, database_type) VALUES (2, 'VARCHAR');
   INSERT INTO attribute_type (id, database_type) VALUES (3, 'INTEGER');
@@ -29,5 +41,6 @@ public class AttributeDataBaseType {
   INSERT INTO attribute_type (id, database_type) VALUES (8, 'TIMESTAMP WITHOUT TIME ZONE');
   INSERT INTO attribute_type (id, database_type) VALUES (9, 'TIMESTAMP WITH TIME ZONE');
   */
+
 
 }

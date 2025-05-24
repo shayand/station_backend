@@ -15,7 +15,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Document(indexName = "user_call_logs_attribute")
+@Document(indexName = "user_call_logs_attribute_index")
 @Data
 public class UserCallLogAttribute implements Serializable, Auditable {
 
@@ -74,19 +74,12 @@ public class UserCallLogAttribute implements Serializable, Auditable {
 
 
   /*
-
-Data Source: crm_db@localhost
-Database: crm_db
-Schema: public
-Table: user_call_log_attributes
-
-
--- auto-generated definition
+  -- auto-generated definition
 create table user_call_log_attributes
 (
-    id                bigint                  not null
+    id                bigint not null
         primary key,
-    user_call_log_id  bigint                  not null,
+    user_call_log_id  bigint not null,
     attribute_id      bigint
         references attribute
             on delete cascade,
@@ -96,18 +89,19 @@ create table user_call_log_attributes
     category_value_id bigint
         references category_values
             on delete cascade,
-    created_at        timestamp default now() not null,
-    updated_at        timestamp default now() not null,
     value_text        text,
     value_integer     integer,
     value_decimal     numeric,
     value_boolean     boolean,
     value_date        date,
     value_timestamp   timestamp,
-    value_timestamptz timestamp with time zone
+    value_timestamptz timestamp with time zone,
+    created_at        timestamp,
+    updated_at        timestamp,
+    deleted_at        timestamp
 );
 
 alter table user_call_log_attributes
     owner to postgres;
-   */
+    */
 }

@@ -15,7 +15,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 
-@Document(indexName = "user_call_logs")
+@Document(indexName = "user_call_logs_index")
 @Data
 public class UserCallLog implements Serializable, Auditable {
 
@@ -52,19 +52,22 @@ public class UserCallLog implements Serializable, Auditable {
   private ZonedDateTime deletedAt; // will fill with its call back class
 
 /*
-  create table user_call_logs
+create table user_call_logs
 (
     id                    bigint generated always as identity
         primary key,
-    user_id               uuid                    not null,
-    employee_id           uuid                    not null,
-    phone                 varchar(20)             not null,
-    call_duration_seconds integer   default 0     not null,
-    message               text                    not null,
-    call_outcome          varchar(50)             not null,
-    created_at            timestamp default now() not null,
-    updated_at            timestamp default now() not null,
-    deleted_at            timestamp default now() not null
+    user_id               uuid              not null,
+    employee_id           uuid              not null,
+    phone                 varchar(20)       not null,
+    call_duration_seconds integer default 0 not null,
+    message               text              not null,
+    call_outcome          varchar(50)       not null,
+    created_at            timestamp,
+    updated_at            timestamp,
+    deleted_at            timestamp
 );
+
+alter table user_call_logs
+    owner to postgres;
  */
 }

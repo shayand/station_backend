@@ -12,7 +12,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 
-@Document(indexName = "employee")
+@Document(indexName = "employee_index")
 @Data
 public class Employee implements Serializable, Auditable {
 
@@ -40,5 +40,22 @@ public class Employee implements Serializable, Auditable {
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private ZonedDateTime deletedAt; // will fill with its call back class
 
+  /*
+  -- auto-generated definition
+  create table employee
+  (
+      id         uuid default gen_random_uuid() not null
+          primary key,
+      first_name varchar(255),
+      last_name  varchar(255),
+      phone      varchar(20),
+      created_at timestamp,
+      updated_at timestamp,
+      deleted_at timestamp
+  );
+
+  alter table employee
+      owner to postgres;
+   */
 
 }

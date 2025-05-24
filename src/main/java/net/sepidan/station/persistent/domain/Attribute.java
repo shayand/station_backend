@@ -13,7 +13,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Document(indexName = "Attribute")
+@Document(indexName = "Attribute_index")
 @Data
 public class Attribute implements Serializable, Auditable {
 
@@ -48,26 +48,23 @@ public class Attribute implements Serializable, Auditable {
 
 
   /*
-Data Source: crm_db@localhost
-Database: crm_db
-Schema: public
-Table: attribute
+    -- auto-generated definition
+    create table attribute
+    (
+        id                bigint not null
+            primary key,
+        fa_name           varchar(255),
+        en_name           varchar(256),
+        description       text,
+        created_at        timestamp,
+        updated_at        timestamp,
+        deleted_at        timestamp,
+        attribute_type_id bigint
+            constraint fk_attribute_type
+                references attribute_type
+    );
 
-
--- auto-generated definition
-create table attribute
-(
-    id             bigint                  not null
-        primary key,
-    fa_name        varchar(255),
-    en_name        varchar(256),
-    attribute_type varchar(50),
-    description    text,
-    created_at     timestamp default now() not null,
-    updated_at     timestamp default now() not null
-);
-
-alter table attribute
-    owner to postgres;
+    alter table attribute
+        owner to postgres;
 */
 }

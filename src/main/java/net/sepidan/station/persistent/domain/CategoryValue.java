@@ -55,7 +55,10 @@ create table category_values
             on delete cascade,
     value       varchar(255) not null,
     label       varchar(255) not null,
-    sort_order  integer      not null
+    sort_order  integer      not null,
+    created_at  timestamp,
+    updated_at  timestamp,
+    deleted_at  timestamp
 );
 
 alter table category_values
