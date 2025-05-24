@@ -14,6 +14,7 @@ import org.springframework.data.elasticsearch.core.event.BeforeConvertCallback;
 public abstract class BaseAuditableCallback<T extends Auditable>
     implements BeforeConvertCallback<T> {
 
+//  You do not need to manually set createdAt, updatedAt, or deletedAt in your service methods.
   private final ElasticsearchOperations esOps;
 
   protected BaseAuditableCallback(ElasticsearchOperations esOps) {
