@@ -6,17 +6,18 @@ import lombok.extern.slf4j.Slf4j;
 import net.sepidan.station.enums.DatabaseType;
 import net.sepidan.station.persistent.domain.AttributeDataBaseType;
 import net.sepidan.station.persistent.service.AttributeDataBaseTypeService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class AttributeTypeSeed {
+public class AttributeTypeSeed implements CommandLineRunner {
 
   private final AttributeDataBaseTypeService attributeTypeService;
 
-  @PostConstruct
-  public void seed() {
+  @Override
+  public void run(String... args) throws Exception {
     // Avoid duplicate seeding if already present
     if (attributeTypeService.count() > 0) {
       return;
