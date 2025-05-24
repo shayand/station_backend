@@ -16,7 +16,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 public class Category implements Serializable, Auditable {
 
   @Id
-  private Long id;
+  private String id;
 
   @Field(type = FieldType.Text)
   private String categoryName;

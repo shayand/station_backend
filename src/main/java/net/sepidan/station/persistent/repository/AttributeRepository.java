@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AttributeRepository extends ElasticsearchRepository<Attribute, String> {
 
-  List<Attribute> findAllByDeletedAtIsNotNull();
+  List<Attribute> findAllByDeletedAtIsNull();
 
 }

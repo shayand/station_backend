@@ -30,16 +30,14 @@ public class CategoryValueService {
 
   // Read one
   public CategoryValue getCategoryValueById(String id) {
-    return categoryValueRepository.findById(id)
-        .filter(value -> value.getDeletedAt() == null)
+    return categoryValueRepository.findByIdAndDeletedAtIsNull(id)
         .orElseThrow(
             () -> new NoSuchElementException("CategoryValue not found or deleted with ID: " + id));
   }
 
   // Update
   public CategoryValue updateCategoryValue(String id, CategoryValue updated) {
-    return categoryValueRepository.findById(id)
-        .filter(value -> value.getDeletedAt() == null)
+    return categoryValueRepository.findByIdAndDeletedAtIsNull(id)
         .map(existing -> {
           existing.setCategoryId(updated.getCategoryId());
           existing.setValue(updated.getValue());
@@ -53,8 +51,7 @@ public class CategoryValueService {
 
   // Soft Delete
   public void deleteCategoryValue(String id) {
-    categoryValueRepository.findById(id)
-        .filter(value -> value.getDeletedAt() == null)
+    categoryValueRepository.findByIdAndDeletedAtIsNull(id)
         .ifPresent(existing -> {
           existing.setDeletedAt(ZonedDateTime.now());
           categoryValueRepository.save(existing);
@@ -62,8 +59,5 @@ public class CategoryValueService {
         });
   }
 
-  // Get all deleted (optional helper)
-  public List<CategoryValue> getAllDeletedCategoryValues() {
-    return categoryValueRepository.findAllByDeletedAtIsNotNull();
-  }
+
 }

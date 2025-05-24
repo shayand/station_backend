@@ -25,21 +25,20 @@ public class CategoryService {
   // Read (exclude soft-deleted)
   public List<Category> getAllCategories() {
     log.info("Fetching all non-deleted categories");
-    return categoryRepository.findAllByDeletedAtIsNotNull();
+    return categoryRepository.findAllByDeletedAtIsNull();
   }
 
   // Read by ID (exclude soft-deleted)
   public Category getCategoryById(String id) {
     log.info("Fetching category by ID: {}", id);
-    return categoryRepository.findById(id)
-        .filter(c -> c.getDeletedAt() == null)
+    return categoryRepository.findByIdAndDeletedAtIsNull(id)
         .orElseThrow(() -> new NoSuchElementException("Category not found with ID: " + id));
   }
 
   // Update
   public Category updateCategory(String id, Category updatedCategory) {
     log.info("Updating category with ID: {}", id);
-    return categoryRepository.findById(id)
+    return categoryRepository.findByIdAndDeletedAtIsNull(id)
         .map(existing -> {
           existing.setCategoryName(updatedCategory.getCategoryName());
           existing.setDescription(updatedCategory.getDescription());
@@ -52,7 +51,7 @@ public class CategoryService {
   // Soft Delete
   public void softDeleteCategory(String id) {
     log.info("Soft deleting category with ID: {}", id);
-    categoryRepository.findById(id)
+    categoryRepository.findByIdAndDeletedAtIsNull(id)
         .ifPresent(existing -> {
           existing.setDeletedAt(ZonedDateTime.now());
           categoryRepository.save(existing); // triggers BaseAuditableCallback
