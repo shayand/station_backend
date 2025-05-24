@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sepidan.station.enums.DatabaseType;
 import net.sepidan.station.persistent.domain.AttributeDataBaseType;
-import net.sepidan.station.persistent.service.AttributeTypeService;
+import net.sepidan.station.persistent.service.AttributeDataBaseTypeService;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AttributeTypeSeed {
 
-  private final AttributeTypeService attributeTypeService;
+  private final AttributeDataBaseTypeService attributeTypeService;
 
   @PostConstruct
   public void seed() {
