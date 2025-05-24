@@ -26,19 +26,19 @@ public class AttributeService {
   // Read (by ID)
   public Optional<Attribute> getAttributeById(String id) {
     log.info("Fetching attribute with ID: {}", id);
-    return attributeRepository.findById(id);
+    return attributeRepository.findByIdAndDeletedAtIsNull(id);
   }
 
   // Read (all)
   public List<Attribute> getAllAttributes() {
     log.info("Fetching all attributes");
-    return (List<Attribute>) attributeRepository.findAll();
+    return attributeRepository.findAllByDeletedAtIsNull();
   }
 
   // Update
   public Attribute updateAttribute(String id, Attribute updatedAttribute) {
     log.info("Updating attribute with ID: {}", id);
-    return attributeRepository.findById(id)
+    return attributeRepository.findByIdAndDeletedAtIsNull(id)
         .map(existing -> {
           existing.setFaName(updatedAttribute.getFaName());
           existing.setEnName(updatedAttribute.getEnName());
@@ -52,7 +52,7 @@ public class AttributeService {
 
   // Delete (soft or hard)
   public void softDelete(String id) {
-    Attribute attribute = attributeRepository.findById(id)
+    Attribute attribute = attributeRepository.findByIdAndDeletedAtIsNull(id)
         .orElseThrow(() -> new NoSuchElementException("Attribute not found with ID: " + id));
     attribute.setDeletedAt(ZonedDateTime.now());
     log.info("soft deleting attribute with ID: {}", id);
