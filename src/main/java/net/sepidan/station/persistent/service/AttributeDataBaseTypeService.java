@@ -1,5 +1,6 @@
 package net.sepidan.station.persistent.service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import net.sepidan.station.enums.DatabaseType;
@@ -12,6 +13,10 @@ import org.springframework.stereotype.Service;
 public class AttributeDataBaseTypeService {
 
   private final AttributeDataBaseTypeRepository attributeDataBaseTypeRepository;
+
+  public List<AttributeDataBaseType> getAll() {
+    return (List<AttributeDataBaseType>) attributeDataBaseTypeRepository.findAll();
+  }
 
   public AttributeDataBaseType findById(String id) {
     return attributeDataBaseTypeRepository.findById(id)
@@ -39,4 +44,5 @@ public class AttributeDataBaseTypeService {
         })
         .orElseThrow(() -> new NoSuchElementException("Not found: " + id));
   }
+
 }
