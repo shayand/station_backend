@@ -29,7 +29,7 @@ public class Attribute implements Serializable, Auditable {
 
   @Field(type = FieldType.Nested)
   @NonNull
-  private AttributeType attributeType;
+  private AttributeDataBaseType attributeType;
 
   @Field(type = FieldType.Text)
   private String description;
