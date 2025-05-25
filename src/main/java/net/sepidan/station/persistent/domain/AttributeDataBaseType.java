@@ -1,12 +1,16 @@
 package net.sepidan.station.persistent.domain;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import net.sepidan.station.enums.DatabaseType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 @Document(indexName = "attribute_type_index")
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class AttributeDataBaseType {
 

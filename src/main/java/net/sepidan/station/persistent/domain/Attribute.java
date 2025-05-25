@@ -3,10 +3,11 @@ package net.sepidan.station.persistent.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import net.sepidan.station.persistent.domain.callback.audit.Auditable;
-import org.glassfish.jaxb.runtime.v2.schemagen.xmlschema.AttributeType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -14,6 +15,8 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Document(indexName = "Attribute_index")
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Attribute implements Serializable, Auditable {
 
@@ -21,10 +24,10 @@ public class Attribute implements Serializable, Auditable {
   @Id
   private String id; //  in postgres should be bigint
 
-  @Field(type = FieldType.Text)
+  @Field(name = "fa_name", type = FieldType.Text)
   private String faName;
 
-  @Field(type = FieldType.Text)
+  @Field(name = "en_name", type = FieldType.Text)
   private String enName;
 
   @Field(type = FieldType.Nested)
@@ -34,15 +37,15 @@ public class Attribute implements Serializable, Auditable {
   @Field(type = FieldType.Text)
   private String description;
 
-  @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
+  @Field(name = "created_at", type = FieldType.Date, format = DateFormat.date_hour_minute_second)
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private ZonedDateTime createdAt;
 
-  @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
+  @Field(name = "updated_at",type = FieldType.Date, format = DateFormat.date_hour_minute_second)
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private ZonedDateTime updatedAt;
 
-  @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
+  @Field(name = "deleted_at",type = FieldType.Date, format = DateFormat.date_hour_minute_second)
   @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private ZonedDateTime deletedAt; // will fill with its call back class
 

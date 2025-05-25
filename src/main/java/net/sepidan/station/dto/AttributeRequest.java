@@ -1,8 +1,14 @@
 package net.sepidan.station.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import net.sepidan.station.persistent.domain.AttributeDataBaseType;
 
-public class AttributeDto {
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class AttributeRequest {
 
   private String faName;
 

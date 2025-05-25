@@ -3,7 +3,9 @@ package net.sepidan.station.persistent.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import net.sepidan.station.persistent.domain.callback.audit.Auditable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
@@ -13,6 +15,8 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 
 @Document(indexName = "employee_index")
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Employee implements Serializable, Auditable {
 

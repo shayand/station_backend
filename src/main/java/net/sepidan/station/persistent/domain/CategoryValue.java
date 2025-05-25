@@ -3,7 +3,9 @@ package net.sepidan.station.persistent.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import net.sepidan.station.persistent.domain.callback.audit.Auditable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
@@ -11,8 +13,11 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+
 @Data
 @Document(indexName = "category_values_index")
+@AllArgsConstructor
+@NoArgsConstructor
 public class CategoryValue implements Serializable, Auditable {
 
   @Id
@@ -65,3 +70,4 @@ alter table category_values
     owner to postgres;
    */
 }
+
