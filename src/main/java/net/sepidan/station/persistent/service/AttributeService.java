@@ -27,7 +27,8 @@ public class AttributeService {
   // Read (by ID)
   public @NotNull Attribute getAttributeById(String id) {
     log.info("Fetching attribute with ID: {}", id);
-    return attributeRepository.findByIdAndDeletedAtIsNull(id).orElseThrow(ResourceLeakException::new);
+    return attributeRepository.findByIdAndDeletedAtIsNull(id).orElseThrow(() -> new NoSuchElementException(
+        "Attribute not found or deleted with ID: " + id));
   }
 
   // Read (all)
