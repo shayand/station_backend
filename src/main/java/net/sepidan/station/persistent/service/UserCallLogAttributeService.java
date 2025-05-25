@@ -23,12 +23,12 @@ public class UserCallLogAttributeService {
   }
 
   // Read all (non-deleted)
-  public List<UserCallLogAttribute> getAllActive() {
+  public List<UserCallLogAttribute> getAllUserCallLogAttribute() {
     return userCallLogAttributeRepository.findAllByDeletedAtIsNull();
   }
 
   // Read one (non-deleted)
-  public UserCallLogAttribute getById(String id) {
+  public UserCallLogAttribute getSingleById(String id) {
     return userCallLogAttributeRepository.findByIdAndDeletedAtIsNull(id)
         .orElseThrow(() -> new NoSuchElementException(
             "UserCallLogAttribute not found or deleted with ID: " + id));

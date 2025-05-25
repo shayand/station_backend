@@ -28,7 +28,8 @@ public class CategoryValueController {
 
   @GetMapping
   public List<CategoryValueResponse> getAll() {
-    return categoryValueService.getAllActiveCategoryValues().stream().map(categoryValueMapper::mapToResponse)
+    return categoryValueService.getAllActiveCategoryValues().stream()
+        .map(categoryValueMapper::mapToResponse)
         .collect(Collectors.toList());
   }
 
@@ -40,15 +41,16 @@ public class CategoryValueController {
 
   @PostMapping
   public ResponseEntity<CategoryValueResponse> create(@RequestBody CategoryValueRequest request) {
-    CategoryValue saved = categoryValueService.createCategoryValue(categoryValueMapper.mapToDomain(request));
+    CategoryValue saved = categoryValueService.createCategoryValue(
+        categoryValueMapper.mapToDomain(request));
     return ResponseEntity.ok(categoryValueMapper.mapToResponse(saved));
   }
 
   @PutMapping("/{id}")
   public ResponseEntity<CategoryValueResponse> update(@PathVariable String id,
       @RequestBody CategoryValueRequest request) {
-    CategoryValue category = categoryValueMapper.mapToDomain(request);
-    var updated = categoryValueService.updateCategoryValue(id, category);
+    CategoryValue categoryValue = categoryValueMapper.mapToDomain(request);
+    var updated = categoryValueService.updateCategoryValue(id, categoryValue);
     return ResponseEntity.ok(categoryValueMapper.mapToResponse(updated));
   }
 

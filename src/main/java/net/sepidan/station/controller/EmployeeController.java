@@ -50,8 +50,8 @@ public class EmployeeController {
   @PutMapping("/{id}")
   public ResponseEntity<EmployeeResponse> update(@PathVariable String id,
       @RequestBody EmployeeRequest request) {
-    Employee category = employeeMapper.mapToDomain(request);
-    var updated = employeeService.updateEmployee(id, category);
+    Employee employee = employeeMapper.mapToDomain(request);
+    var updated = employeeService.updateEmployee(id, employee);
     return ResponseEntity.ok(employeeMapper.mapToResponse(updated));
   }
 

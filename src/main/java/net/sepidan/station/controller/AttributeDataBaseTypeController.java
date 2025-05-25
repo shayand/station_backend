@@ -59,7 +59,7 @@ public class AttributeDataBaseTypeController {
   public ResponseEntity<AttributeDataBaseTypeResponse> update(@PathVariable String id,
       @RequestBody AttributeDataBaseTypeRequest request) {
     AttributeDataBaseType domain = attributeDataBaseTypeMapper.mapToDomain(request);
-    var updated = attributeDataBaseTypeService.update(id, domain.getDatabaseType());
+    AttributeDataBaseType updated = attributeDataBaseTypeService.update(id, domain.getDatabaseType());
     return ResponseEntity.ok(attributeDataBaseTypeMapper.mapToResponse(updated));
   }
 
