@@ -44,7 +44,7 @@ public class AttributeController {
     List<Attribute> attributes = attributeService.getAllAttributes();
     List<AttributeResponse> responses = attributes.stream()
         .map(attributeMapper::mapToResponse)
-        .collect(Collectors.toList());
+        .toList();
     return ResponseEntity.ok(responses);
   }
 
