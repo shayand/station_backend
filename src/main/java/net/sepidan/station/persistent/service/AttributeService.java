@@ -1,9 +1,10 @@
 package net.sepidan.station.persistent.service;
 
+import io.netty.util.ResourceLeakException;
+import jakarta.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sepidan.station.persistent.domain.Attribute;
@@ -24,9 +25,9 @@ public class AttributeService {
   }
 
   // Read (by ID)
-  public Optional<Attribute> getAttributeById(String id) {
+  public @NotNull Attribute getAttributeById(String id) {
     log.info("Fetching attribute with ID: {}", id);
-    return attributeRepository.findByIdAndDeletedAtIsNull(id);
+    return attributeRepository.findByIdAndDeletedAtIsNull(id).orElseThrow(ResourceLeakException::new);
   }
 
   // Read (all)

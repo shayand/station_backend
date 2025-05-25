@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import net.sepidan.station.dto.AttributeRequest;
 import net.sepidan.station.dto.AttributeResponse;
+import net.sepidan.station.dto.CategoryValueResponse;
 import net.sepidan.station.mapper.AttributeMapper;
 import net.sepidan.station.persistent.domain.Attribute;
+import net.sepidan.station.persistent.domain.CategoryValue;
 import net.sepidan.station.persistent.service.AttributeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,10 +53,8 @@ public class AttributeController {
   // Read one by id
   @GetMapping("/{id}")
   public ResponseEntity<AttributeResponse> getAttributeById(@PathVariable String id) {
-    return attributeService.getAttributeById(id)
-        .map(attributeMapper::mapToResponse)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
+    Attribute found = attributeService.getAttributeById(id);
+    return ResponseEntity.ok(attributeMapper.mapToResponse(found));
   }
 
   // Update
