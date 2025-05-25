@@ -23,39 +23,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CategoryValueController {
 
-  private final CategoryValueService service;
-  private final CategoryValueMapper mapper;
+  private final CategoryValueService categoryValueService;
+  private final CategoryValueMapper categoryValueMapper;
 
   @GetMapping
   public List<CategoryValueResponse> getAll() {
-    return service.getAllActiveCategoryValues().stream().map(mapper::mapToResponse)
+    return categoryValueService.getAllActiveCategoryValues().stream().map(categoryValueMapper::mapToResponse)
         .collect(Collectors.toList());
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<CategoryValueResponse> getById(@PathVariable String id) {
-    CategoryValue found = service.getCategoryValueById(id);
-    return ResponseEntity.ok(mapper.mapToResponse(found));
+    CategoryValue found = categoryValueService.getCategoryValueById(id);
+    return ResponseEntity.ok(categoryValueMapper.mapToResponse(found));
   }
 
   @PostMapping
   public ResponseEntity<CategoryValueResponse> create(@RequestBody CategoryValueRequest request) {
-    CategoryValue saved = service.createCategoryValue(mapper.mapToDomain(request));
-    return ResponseEntity.ok(mapper.mapToResponse(saved));
+    CategoryValue saved = categoryValueService.createCategoryValue(categoryValueMapper.mapToDomain(request));
+    return ResponseEntity.ok(categoryValueMapper.mapToResponse(saved));
   }
 
   @PutMapping("/{id}")
   public ResponseEntity<CategoryValueResponse> update(@PathVariable String id,
       @RequestBody CategoryValueRequest request) {
-    CategoryValue category = mapper.mapToDomain(request);
-    var updated = service.updateCategoryValue(id, category);
-    return ResponseEntity.ok(mapper.mapToResponse(updated));
+    CategoryValue category = categoryValueMapper.mapToDomain(request);
+    var updated = categoryValueService.updateCategoryValue(id, category);
+    return ResponseEntity.ok(categoryValueMapper.mapToResponse(updated));
   }
 
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable String id) {
-    service.SoftDeleteCategoryValue(id);
+    categoryValueService.SoftDeleteCategoryValue(id);
     return ResponseEntity.noContent().build();
   }
 }
