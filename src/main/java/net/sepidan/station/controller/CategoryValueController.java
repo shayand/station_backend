@@ -55,7 +55,7 @@ public class CategoryValueController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable String id) {
-    categoryValueService.SoftDeleteCategoryValue(id);
+    categoryValueService.SoftDelete(id);
     return ResponseEntity.noContent().build();
   }
 }

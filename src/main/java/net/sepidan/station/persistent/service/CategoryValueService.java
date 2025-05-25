@@ -50,7 +50,7 @@ public class CategoryValueService {
   }
 
   // Soft Delete
-  public void SoftDeleteCategoryValue(String id) {
+  public void SoftDelete(String id) {
     categoryValueRepository.findByIdAndDeletedAtIsNull(id)
         .ifPresent(existing -> {
           existing.setDeletedAt(ZonedDateTime.now());
