@@ -1,48 +1,22 @@
 package net.sepidan.station.persistent.service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import lombok.RequiredArgsConstructor;
 import net.sepidan.station.enums.DatabaseType;
 import net.sepidan.station.persistent.domain.AttributeDataBaseType;
-import net.sepidan.station.persistent.repository.AttributeDataBaseTypeRepository;
-import org.springframework.stereotype.Service;
 
-@Service
-@RequiredArgsConstructor
-public class AttributeDataBaseTypeService {
-
-  private final AttributeDataBaseTypeRepository attributeDataBaseTypeRepository;
-
-  public List<AttributeDataBaseType> getAll() {
-    return (List<AttributeDataBaseType>) attributeDataBaseTypeRepository.findAll();
-  }
-
-  public AttributeDataBaseType findById(String id) {
-    return attributeDataBaseTypeRepository.findById(id)
-        .orElseThrow(() -> new NoSuchElementException("AttributeDataBaseType with ID: " + id));
-  }
-
-  public AttributeDataBaseType save(AttributeDataBaseType attributeDataBaseType) {
-    return attributeDataBaseTypeRepository.save(attributeDataBaseType);
-  }
-
-  public Long count() {
-    return attributeDataBaseTypeRepository.count();
-  }
+public interface AttributeDataBaseTypeService {
 
 
-  public AttributeDataBaseType create(AttributeDataBaseType attributeDataBaseType) {
-    return attributeDataBaseTypeRepository.save(attributeDataBaseType);
-  }
+  public List<AttributeDataBaseType> getAll();
 
-  public AttributeDataBaseType update(String id, DatabaseType newType) {
-    return attributeDataBaseTypeRepository.findById(id)
-        .map(existing -> {
-          existing.setDatabaseType(newType);
-          return attributeDataBaseTypeRepository.save(existing); // updatedAt auto
-        })
-        .orElseThrow(() -> new NoSuchElementException("Not found: " + id));
-  }
+  public AttributeDataBaseType findById(String id);
 
+  public AttributeDataBaseType save(AttributeDataBaseType attributeDataBaseType);
+
+  public Long count();
+
+
+  public AttributeDataBaseType create(AttributeDataBaseType attributeDataBaseType);
+
+  public AttributeDataBaseType update(String id, DatabaseType newType);
 }
