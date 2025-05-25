@@ -9,7 +9,7 @@ import net.sepidan.station.persistent.domain.AttributeDataBaseType;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AttributeResponceDto {
+public class AttributeResponse {
 
   private String id; //  in postgres should be bigint
 

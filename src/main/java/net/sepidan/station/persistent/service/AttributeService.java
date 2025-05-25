@@ -18,7 +18,7 @@ public class AttributeService {
   private final AttributeRepository attributeRepository;
 
   // Create
-  public Attribute createAttribute(Attribute attribute) {
+  public Attribute save(Attribute attribute) {
     log.info("Creating attribute: {}", attribute);
     return attributeRepository.save(attribute);
   }
