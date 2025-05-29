@@ -6,8 +6,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class InitFirstResponse {
-  String version;
 
-
-  String deviceId;
+  private String version;
+  private String deviceId;
 }

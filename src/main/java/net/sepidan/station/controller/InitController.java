@@ -10,6 +10,7 @@ import net.sepidan.station.payload.request.InitFirstRequest;
 import net.sepidan.station.payload.response.InitFirstResponse;
 import net.sepidan.station.utils.KeycloakUtil;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ public class InitController {
 
   private final KeycloakUtil keycloakUtil;
 
+  @PreAuthorize("hasRole('customer')")
   @PostMapping("first")
   public ResponseEntity<InitFirstResponse> first(@RequestBody @Valid InitFirstRequest request,
       JwtAuthenticationToken auth) {
@@ -35,11 +37,11 @@ public class InitController {
 
     try {
       User user = new User();
-      user.setUsername("user1");
-      user.setPassword("user1@user1");
+      user.setUsername("user@sepidan.net");
+      user.setPassword("hasan");
       user.setFirstName("user1");
       user.setLastName("user1");
-      user.setPhone("+989355555555");
+      user.setPhone("+989351057926");
 
       keycloakUtil.createUser(user);
     } catch (Exception e) {
